@@ -1,6 +1,5 @@
 package cn.secondKill.dao;
 
-import cn.secondKill.entity.SecKill;
 import cn.secondKill.entity.SuccessKilled;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +25,8 @@ public class SuccessKilledDaoTest {
 
     @Test
     public void queryByIdWithSecKill() throws Exception {
-        long id = 1001L;
-        long userPhone = 13983559695L;
+        long id = 1003;
+        long userPhone = 13983559581L;
         SuccessKilled successKilled = successKilledDao.queryByIdWithSecKill(id,userPhone);
         System.out.println(successKilled);
         System.out.println(successKilled.getSecKill());

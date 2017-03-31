@@ -57,7 +57,11 @@ public class SecKillServiceImplTest {
             }catch (SecKillCloseException e){
                 logger.error(e.getMessage());
             }
+        }else {
+            //秒杀未开启
+            logger.warn("exposer={}",exposer);
         }
 
     }
+
 }
