@@ -5,6 +5,7 @@ import cn.secondKill.Exception.SecKillCloseException;
 import cn.secondKill.Exception.SecKillException;
 import cn.secondKill.dao.SecKillDao;
 import cn.secondKill.dao.SuccessKilledDao;
+import cn.secondKill.dao.cache.RedisDao;
 import cn.secondKill.dto.Exposer;
 import cn.secondKill.dto.SecKillExecution;
 import cn.secondKill.entity.SecKill;
@@ -34,6 +35,9 @@ public class SecKillServiceImpl implements SecKillService{
     @Autowired
     private SuccessKilledDao successKilledDao;
 
+    @Autowired
+    private RedisDao redisDao;
+
     @Override
     public List<SecKill> getSecKillList() {
         return secKillDao.queryAll(0,4);
@@ -47,9 +51,18 @@ public class SecKillServiceImpl implements SecKillService{
     @Override
     @Transactional
     public Exposer exportSecKillUrl(long secKillId) {
-        SecKill secKill = secKillDao.queryById(secKillId);
-        if (secKill == null){
-            return new Exposer(false,secKillId);
+        // 优化点:缓存优化:超时的基础上维护一致性
+        //1：访问redis
+        SecKill secKill = redisDao.getSecKill(secKillId);
+        if (secKill == null) {
+            //2:访问数据库
+            secKill = secKillDao.queryById(secKillId);
+            if (secKill == null) {
+                return new Exposer(false, secKillId);
+            } else {
+                //3:放入redis
+                redisDao.putSecKill(secKill);
+            }
         }
         Date startTime = secKill.getStartTime();
         Date endTime = secKill.getEndTime();
@@ -71,19 +84,20 @@ public class SecKillServiceImpl implements SecKillService{
         //执行秒杀过程：减库存和记录购买行为
         Date nowTime = new Date();
         try {
-            //减库存
-            int updateCount = secKillDao.reduceNumber(secKillId, nowTime);
-            if (updateCount <= 0) {
-                //秒杀结束
-                throw new SecKillCloseException("SecKill is closed");
+            //记录购买行为
+            int insertCount = successKilledDao.insertSuccessKilled(secKillId, userPhone);
+            //唯一:secKillId,userPhone
+            if (insertCount <= 0) {
+                //重复秒杀
+                throw new RepeatKillException("secKill repeated");
             } else {
-                //减库存成功，记录购买行为
-                int insertCount = successKilledDao.insertSuccessKilled(secKillId, userPhone);
-                if (insertCount <= 0) {
-                    //重复秒杀
-                    throw new RepeatKillException("secKill repeated");
+                //减库存,热点商品竞争
+                int updateCount = secKillDao.reduceNumber(secKillId, nowTime);
+                if (updateCount <= 0) {
+                    //没有更新到记录，秒杀结束,rollback
+                    throw new SecKillCloseException("secKill is closed");
                 } else {
-                    //秒杀成功
+                    //秒杀成功 commit
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSecKill(secKillId, userPhone);
                     return new SecKillExecution(secKillId, SecKillStateEnum.SUCCESS, successKilled);
                 }

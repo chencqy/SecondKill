@@ -66,7 +66,7 @@
       <file leaf-file-name="SecKillServiceImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/secondKill/service/impl/SecKillServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
+            <state relative-caret-position="426">
               <caret line="95" column="32" lean-forward="true" selection-start-line="95" selection-start-column="32" selection-end-line="95" selection-end-column="32" />
               <folding />
             </state>
@@ -1215,7 +1215,7 @@
       <workItem from="1490691078268" duration="9170000" />
       <workItem from="1490763781324" duration="12516000" />
       <workItem from="1490850512388" duration="8301000" />
-      <workItem from="1490949150832" duration="1535000" />
+      <workItem from="1490949150832" duration="1606000" />
     </task>
     <task id="LOCAL-00001" summary="secKill">
       <created>1490851267545</created>
@@ -1281,10 +1281,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93734000" />
+    <option name="totallyTimeSpent" value="93805000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1754,7 +1754,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/secondKill/service/impl/SecKillServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
+        <state relative-caret-position="426">
           <caret line="95" column="32" lean-forward="true" selection-start-line="95" selection-start-column="32" selection-end-line="95" selection-end-column="32" />
           <folding />
         </state>
