@@ -1,0 +1,22 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.secondKill.dao.HumanDao">
+    <!--目的:为dao接口方法提供sql语句配置-->
+
+    <select id="queryHumanById" resultType="HumanModel" parameterType="java.lang.Integer">
+        SELECT human_id, humanName, password, gender,u ser_phone
+        FROM human
+        WHERE human_id = #{humanId}
+    </select>
+
+    <select id="queryHumanAll" resultType="HumanModel">
+        SELECT human_id, humanName, password, gender,u ser_phone
+        FROM human
+        ORDER BY human_id
+    </select>
+
+
+
+
+</mapper>
