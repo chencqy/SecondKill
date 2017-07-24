@@ -23,7 +23,6 @@ public interface HumanService {
      * @return : List<HumanModel>
      * @Date : 2017/7/23 20:04
      */
-
     List<HumanModel> getHumanAll();
 
 }

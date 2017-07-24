@@ -16,6 +16,11 @@
         ORDER BY human_id
     </select>
 
+    <insert id="addHuman">
+        INSERT INTO human (humanName, gender, user_phone,password, email)
+        VALUES(#{humanName}, #{gender}, #{user_phone} ,#{password} ,#{email})
+    </insert>
+
 
 
 

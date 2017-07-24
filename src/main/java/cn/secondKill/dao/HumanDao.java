@@ -1,6 +1,7 @@
 package cn.secondKill.dao;
 
 import cn.secondKill.entity.HumanModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,5 +26,14 @@ public interface HumanDao {
      * @Date : 2017/7/23 20:02
      */
     List<HumanModel> queryAllHuman();
+
+    /**
+     * @Description : 添加用户
+     * @param : humanName  gender  user_phone  password email
+     * @return :
+     * @Date : 2017/7/24 21:26
+     */
+
+    void addHuman(@Param("humanName")String humanName, @Param("gender")String gender, @Param("user_phone")String user_phone, @Param("password")String password, @Param("email")String email);
 
 }
